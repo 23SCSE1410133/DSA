@@ -1,17 +1,15 @@
 class Solution {
     public int jump(int[] nums) {
-         int n=nums.length;
+         int n=nums.length,MAX=Integer.MAX_VALUE;
          int[] dp=new int[n];
-         for(int i=1;i<n;i++){
-            dp[i]=Integer.MAX_VALUE;
-         }
-         dp[0]=0;
-         for(int i=0;i<n;i++){
-            if(dp[i]==Integer.MAX_VALUE) continue;
-            for(int j=1;j<=nums[i] && i+j<n;j++){
-                dp[i+j]=Math.min(dp[i+j],dp[i]+1);
+         dp[n-1]=0;
+         for(int i=n-2;i>=0;i--){
+            int min=MAX;
+            for(int j=1;j<=nums[i]&&i+j<n;j++){
+                min=Math.min(min,dp[i+j]);
             }
+            dp[i]=min!=MAX ? 1+min:MAX;
          }
-         return dp[n-1];
+         return dp[0];
     }
 }
